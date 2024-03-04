@@ -18,6 +18,21 @@
 #
 ###################################################################
 
+#' Get population excel files urls
+#'
+#' @return vector of file ulrs
+#' @export
+dalopop_get_data_urls <- function(){
+  ans <- c(pop_new_urls(),
+           pop_old_urls(),
+           pop_2020_urls(),
+           pop_5age_urls())
+
+  return(ans)
+}
+
+
+
 #//////////////////////////////////////////////////////////////////
 # popデータファイルURLのベクトルを作成するルーチン
 #//////////////////////////////////////////////////////////////////

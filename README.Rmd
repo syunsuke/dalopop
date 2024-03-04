@@ -1,25 +1,39 @@
+---
+output: github_document
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
 
 # dalopop
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-dalopop is to a helper tool to collect population data in Osaka. dalopop
-is one of dalo tools which DAta downLOd helper tool.
+dalopop is to a helper tool to collect population data in Osaka.
+dalopop is one of dalo tools which DAta downLOd helper tool.
 
 dalopopは、大阪府の人口データを集めて活用するためのツールです。
 大阪府のホームページで公表されている月次の人口データをダウンロードして、
 Rのdata.frameパッケージにするための関数を用意しています。
 
-このツールで利用するデータは、 大阪府が公表している
+このツールで利用するデータは、
+大阪府が公表している
 「[大阪府の毎月推計人口](https://www.pref.osaka.lg.jp/toukei/jinkou/)」に基づくものです。
 
-URL:<https://www.pref.osaka.lg.jp/toukei/jinkou/>
+URL:https://www.pref.osaka.lg.jp/toukei/jinkou/
 
 当該データ自体のライセンスに関する明記はありませんが、
 「[利用上の注意](https://www.pref.osaka.lg.jp/toukei/jinkou/jinkou-chuui.html)」のページがあるので目を通してください。
+
 
 ## インストール
 
@@ -50,7 +64,7 @@ Rプロジェクトを作成し、その中にダウンロード用のディレ�
 
 大阪府の人口データを公表するページでは、毎月更新されているので、その配布ファイルのURLをスクレイピングします。主となるページのURLは以下です。
 
-<https://www.pref.osaka.lg.jp/toukei/jinkou/jinkou-xlslist.html>
+https://www.pref.osaka.lg.jp/toukei/jinkou/jinkou-xlslist.html
 
 ### URLを元にダウンロード
 
@@ -68,7 +82,7 @@ FALSEにすることで、強制的にダウンロードして上書きします
 
 以下に、大阪の人口データをRデータとして作成するサンプルコードを示します。
 
-``` r
+```{r exmaple000, eval=FALSE}
 library(dalo)
 library(rabbit)
 library(dalopop)
@@ -91,67 +105,72 @@ datafiles <- dir(dl_dir, full.names = TRUE)
 
 # ファイルパスを渡して読み込みdata.frameにする
 pop_osaka <- dalopop_read_file(datafiles)
+
 ```
+
 
 ## dalopop_read_fileの作成するデータ
 
 上述のコードで生成されるdata.frameの列は以下のようになっています。
 年齢別の部分については5歳づつの20区分になっています。
 
-| 列名    | 型   | 内容                                                            |
-|---------|------|-----------------------------------------------------------------|
-| date    | Date | 日付                                                            |
-| area    | chr  | 地域名                                                          |
-| area_id | num  | 市区町村コード                                                  |
-| hh      | num  | 世帯数 (housholds)                                              |
-| pt      | num  | 総人口 (population total)                                       |
-| pm      | num  | 男性人口 (population male)                                      |
-| pf      | num  | 女性人口 (population female)                                    |
-| yct     | num  | 年間の総増減 (total change of year)                             |
-| ycn     | num  | 年間の自然増減 (total natural change of year)                   |
-| yib     | num  | 年間の増減 自然 出生 (total natural increase by birth of year)  |
-| ydd     | num  | 年間の増減 自然 死亡 (total natural decrease by death of year)  |
-| ycs     | num  | 年間の増減 社会 (total natural change of year)                  |
-| mct     | num  | 月間の総増減 (total change of month)                            |
-| mcn     | num  | 月間の自然増減 (total natural change of month)                  |
-| mib     | num  | 月間の増減 自然 出生 (total natural increase by birth of month) |
-| mdd     | num  | 月間の増減 自然 死亡 (total natural decrease by death of month) |
-| mcs     | num  | 月間の増減 社会 (total natural change of month)                 |
-| pph     | num  | １世帯あたりの人口 (person per households)                      |
-| ppa     | num  | 人口密度 (person per area km^2)                                 |
-| t_total | num  | 総人口                                                          |
-| t_00_04 | num  | 0歳から4歳の総人口                                              |
-| t_05_09 | num  | 5歳から9歳の総人口                                              |
-| …       | num  | …                                                               |
-| t_90_94 | num  | 90歳から94歳の総人口                                            |
-| t_95\_  | num  | 95歳以上の総人口                                                |
-| t_chile | num  | 年少総人口（０歳から１４歳）                                    |
-| t_young | num  | 生産総人口（１５歳から６４歳）                                  |
-| t_old   | num  | 老年総人口（６５歳以上）                                        |
-| m_total | num  | 男性総人口                                                      |
-| m_00_04 | num  | 0歳から4歳の男性人口                                            |
-| m_05_09 | num  | 5歳から9歳の男性人口                                            |
-| …       | num  | …                                                               |
-| m_90_94 | num  | 90歳から94歳の男性人口                                          |
-| m_95\_  | num  | 95歳以上の男性人口                                              |
-| m_chile | num  | 年少男性人口（０歳から１４歳）                                  |
-| m_young | num  | 生産男性人口（１５歳から６４歳）                                |
-| m_old   | num  | 老年男性人口（６５歳以上）                                      |
-| f_total | num  | 女性総人口                                                      |
-| f_00_04 | num  | 0歳から4歳の女性人口                                            |
-| f_05_09 | num  | 5歳から9歳の女性人口                                            |
-| …       | num  | …                                                               |
-| f_90_94 | num  | 90歳から94歳の女性人口                                          |
-| f_95\_  | num  | 95歳以上の女性人口                                              |
-| f_chile | num  | 年少女性人口（０歳から１４歳）                                  |
-| f_young | num  | 生産女性人口（１５歳から６４歳）                                |
-| f_old   | num  | 老年女性人口（６５歳以上）                                      |
+
+|列名|型|内容|
+|---|---|----|
+|date|Date|日付|
+|area|chr|地域名|
+|area_id|num|市区町村コード|
+|hh|num|世帯数 (housholds)|
+|pt|num|総人口 (population total)|
+|pm|num|男性人口 (population male)|
+|pf|num|女性人口 (population female)|
+|yct|num|年間の総増減 (total change of year)|
+|ycn|num|年間の自然増減 (total natural change of year)|
+|yib|num|年間の増減 自然 出生 (total natural increase by birth of year)|
+|ydd|num|年間の増減 自然 死亡 (total natural decrease by death of year)|
+|ycs|num|年間の増減 社会 (total natural change of year)|
+|mct|num|月間の総増減 (total change of month)|
+|mcn|num|月間の自然増減 (total natural change of month)|
+|mib|num|月間の増減 自然 出生 (total natural increase by birth of month)|
+|mdd|num|月間の増減 自然 死亡 (total natural decrease by death of month)|
+|mcs|num|月間の増減 社会 (total natural change of month)|
+|pph|num|１世帯あたりの人口 (person per households)|
+|ppa|num|人口密度 (person per area km^2)|
+|t_total|num|総人口|
+|t_00_04|num|0歳から4歳の総人口|
+|t_05_09|num|5歳から9歳の総人口|
+|...|num|...|
+|t_90_94|num|90歳から94歳の総人口|
+|t_95_|num|95歳以上の総人口|
+|t_chile|num|年少総人口（０歳から１４歳）|
+|t_young|num|生産総人口（１５歳から６４歳）|
+|t_old|num|老年総人口（６５歳以上）|
+|m_total|num|男性総人口|
+|m_00_04|num|0歳から4歳の男性人口|
+|m_05_09|num|5歳から9歳の男性人口|
+|...|num|...|
+|m_90_94|num|90歳から94歳の男性人口|
+|m_95_|num|95歳以上の男性人口|
+|m_chile|num|年少男性人口（０歳から１４歳）|
+|m_young|num|生産男性人口（１５歳から６４歳）|
+|m_old|num|老年男性人口（６５歳以上）|
+|f_total|num|女性総人口|
+|f_00_04|num|0歳から4歳の女性人口|
+|f_05_09|num|5歳から9歳の女性人口|
+|...|num|...|
+|f_90_94|num|90歳から94歳の女性人口|
+|f_95_|num|95歳以上の女性人口|
+|f_chile|num|年少女性人口（０歳から１４歳）|
+|f_young|num|生産女性人口（１５歳から６４歳）|
+|f_old|num|老年女性人口（６５歳以上）|
+
 
 ## エクセルファイルとしての出力
 
 上記で作成した人口データをエクセルファイルとして出力する例は以下のとおりです。
 
-``` r
+
+```{r exmaple001, eval=FALSE}
 library(openxlsx)
 
 # 日付型の表示の指定
@@ -161,11 +180,13 @@ options("openxlsx.dateFormat" = "yyyy/mm/dd")
 write.xlsx(osaka_pop,file = "osaka_popdata_20240304.xlsx")
 ```
 
+
 ## 一括処理で簡単にデータを得る
 
 上記の処理を一括して行うには、大阪府の人口データエクセルファイルをダウンロードして保存するディレクトリを用意して、そのディレクトリを指定した以下のコマンドでエクセルファイルを得ることが出来ます。
 
-``` r
+
+```{r exmaple002, eval=FALSE}
 library(dalopop)
 
 # ダウンロードデータを保存するディレクトリを準備して
@@ -177,12 +198,16 @@ dalopop_outputExcelData(dl_dir)
 
 カレントディレクトリに`osakapop_202403042020.xlsx`のように日付入のエクセルファイルを作成します。
 
+
 `areasheet`引数はデフォルトでTRUEになっていますが、
 これをFALSEにすることで、地域毎にシートを分けず、
 一つのシートでエクセルファイルを作成します。
 
-``` r
+```{r exmaple003, eval=FALSE}
 
 # 地域ごとにシートを分けず、一つのエクセルファイルにする
 dalopop_outputExcelData(dl_dir, areasheet = FALSE)
 ```
+
+
+
