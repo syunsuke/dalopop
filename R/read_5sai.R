@@ -75,7 +75,7 @@ read_5sai <- function(filepath){
 
   colnames(a1) <- total_5sai_colname
   a1 <- a1 %>%
-    dplyr::mutate(t_chile = t_00_04 + t_05_09 + t_10_14,
+    dplyr::mutate(t_child = t_00_04 + t_05_09 + t_10_14,
                   t_young = t_15_19 + t_20_24 + t_25_29 + t_30_34 + t_35_39 +
                     t_40_44 + t_45_49 + t_50_54 + t_55_59 + t_60_64,
                   t_old   = t_65_69 + t_70_74 + t_75_79 + t_80_84 + t_85_89 +
@@ -83,7 +83,7 @@ read_5sai <- function(filepath){
 
   colnames(a2) <- male_5sai_colname
   a2 <- a2 %>%
-    dplyr::mutate(m_chile = m_00_04 + m_05_09 + m_10_14,
+    dplyr::mutate(m_child = m_00_04 + m_05_09 + m_10_14,
                   m_young = m_15_19 + m_20_24 + m_25_29 + m_30_34 + m_35_39 +
                     m_40_44 + m_45_49 + m_50_54 + m_55_59 + m_60_64,
                   m_old   = m_65_69 + m_70_74 + m_75_79 + m_80_84 + m_85_89 +
@@ -91,7 +91,7 @@ read_5sai <- function(filepath){
 
   colnames(a3) <- female_5sai_colname
   a3 <- a3 %>%
-    dplyr::mutate(f_chile = f_00_04 + f_05_09 + f_10_14,
+    dplyr::mutate(f_child = f_00_04 + f_05_09 + f_10_14,
                   f_young = f_15_19 + f_20_24 + f_25_29 + f_30_34 + f_35_39 +
                     f_40_44 + f_45_49 + f_50_54 + f_55_59 + f_60_64,
                   f_old   = f_65_69 + f_70_74 + f_75_79 + f_80_84 + f_85_89 +

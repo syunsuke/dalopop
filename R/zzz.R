@@ -1,6 +1,7 @@
 .onLoad <- function(libname, pkgname) {
   if (getRversion() >= "2.15.1") {
     utils::globalVariables(c("area", "area_name",
+                             "t_child","t_old","t_young",
                              "X1","X2",
                              "hh","pt",
                              "t_00_04",

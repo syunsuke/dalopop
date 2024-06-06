@@ -43,19 +43,16 @@ pop_new_urls <- function(){
 
   # 2024現在の大阪府の人口データ（月次）配布サイト（新しい）
   target_page <-
-    "https://www.pref.osaka.lg.jp/toukei/jinkou/jinkou-xlslist.html"
+    "https://www.pref.osaka.lg.jp/o040090/toukei/jinkou/jinkou-xlslist.html"
 
   my_prefix <- "https://www.pref.osaka.lg.jp"
 
-  #https://www.pref.osaka.lg.jp/attach/3387/00014690/jk20220801.xlsx
-  #https://www.pref.osaka.lg.jp/attach/3387/00014690/kakutei_jk20210201.xlsx
   my_filename_pattern = "jk20[0-9]{2}[0-9]{2}[0-9]{2}.*\\.xlsx$"
 
   links <-
     dalo::dalo_fetch_links(url = target_page,
                            selector = "tbody td",
                            filename_pattern = my_filename_pattern,
-                           encoding = "shift_jis",
                            prefix = my_prefix)
   return(links)
 }
@@ -66,18 +63,19 @@ pop_2020_urls <- function(){
 
   # 2020 国勢調査の大阪府版詳細ファイル
   target_page <-
-    "https://www.pref.osaka.lg.jp/toukei/top_portal/kokucho.html"
+    #"https://www.pref.osaka.lg.jp/toukei/top_portal/kokucho.html"
+    #"https://www.pref.osaka.lg.jp/o040090/toukei/jinkou/jinkou-h.html"
+    "https://www.pref.osaka.lg.jp/o040090/toukei/top_portal/kokucho.html"
 
   my_prefix <- "https://www.pref.osaka.lg.jp"
-
   ## https://www.pref.osaka.lg.jp/attach/42622/00426107/R2kokutyo_osakahu_kakuhou_syousai.xlsx
-  my_filename_pattern = "R2.*_syousai\\.xlsx$"
+  my_filename_pattern = "r2.*_syousai\\.xlsx$"
 
   links <-
     dalo::dalo_fetch_links(url = target_page,
                            selector = "tbody td",
                            filename_pattern = my_filename_pattern,
-                           encoding = "shift_jis",
+                           #encoding = "shift_jis",
                            prefix = my_prefix)
   return(links)
 
@@ -89,8 +87,8 @@ pop_old_urls <- function(){
 
   # 2024現在の大阪府の人口データ（月次）配布サイト（古い）
   target_page <-
-    "https://www.pref.osaka.lg.jp/toukei/jinkou/jinkou-h.html"
-
+    #"https://www.pref.osaka.lg.jp/toukei/jinkou/jinkou-h.html"
+    "https://www.pref.osaka.lg.jp/o040090/toukei/jinkou/jinkou-h.html"
   my_prefix <- "https://www.pref.osaka.lg.jp"
 
   # https://www.pref.osaka.lg.jp/attach/3387/00040392/hosei202001_09.xlsx
@@ -100,7 +98,7 @@ pop_old_urls <- function(){
     dalo::dalo_fetch_links(url = target_page,
                            selector = "tbody td",
                            filename_pattern = my_filename_pattern,
-                           encoding = "shift_jis",
+                           #encoding = "shift_jis",
                            prefix = my_prefix)
   return(links)
 
@@ -111,10 +109,12 @@ pop_old_urls <- function(){
 pop_5age_urls <- function(){
 
   new_target_page <-
-    "https://www.pref.osaka.lg.jp/toukei/jinkou/jinkou-xlslist.html"
+    #"https://www.pref.osaka.lg.jp/toukei/jinkou/jinkou-xlslist.html"
+    "https://www.pref.osaka.lg.jp/o040090/toukei/jinkou/jinkou-xlslist.html"
 
   old_target_page <-
-    "https://www.pref.osaka.lg.jp/toukei/jinkou/jinkou-h.html"
+    #"https://www.pref.osaka.lg.jp/toukei/jinkou/jinkou-h.html"
+    "https://www.pref.osaka.lg.jp/o040090/toukei/jinkou/jinkou-h2.html"
 
   my_prefix <- "https://www.pref.osaka.lg.jp"
 
@@ -126,7 +126,7 @@ pop_5age_urls <- function(){
     dalo::dalo_fetch_links(url = new_target_page,
                            selector = "tbody td",
                            filename_pattern = my_filename_pattern,
-                           encoding = "shift_jis",
+                           encoding = "UTF-8",
                            prefix = my_prefix)
 
   # 古いデータに関するページ
@@ -134,7 +134,7 @@ pop_5age_urls <- function(){
     dalo::dalo_fetch_links(url = old_target_page,
                            selector = "tbody td",
                            filename_pattern = my_filename_pattern,
-                           encoding = "shift_jis",
+                           encoding = "UTF-8",
                            prefix = my_prefix)
 
   # 新しい、古いデータの統合

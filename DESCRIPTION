@@ -1,6 +1,6 @@
 Package: dalopop
 Title: Collecting Population data in Osaka
-Version: 0.0.1.0000
+Version: 0.0.2.0000
 Authors@R: 
     person("Syunsuke", "Fukuda", , "ok.xmonad@gmail.com", role = c("aut", "cre"))
 Description: A helper tool to collect population data in osaka.

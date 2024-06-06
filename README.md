@@ -14,12 +14,12 @@ dalopopは、大阪府の人口データを集めて活用するためのツー�
 Rのdata.frameパッケージにするための関数を用意しています。
 
 このツールで利用するデータは、 大阪府が公表している
-「[大阪府の毎月推計人口](https://www.pref.osaka.lg.jp/toukei/jinkou/)」に基づくものです。
+「[大阪府の毎月推計人口](https://www.pref.osaka.lg.jp/fuseiunei/toukeijouhou/toukeikajisshinochousa/maitsukisuikeijinkou/index.html)」に基づくものです。
 
-URL:<https://www.pref.osaka.lg.jp/toukei/jinkou/>
+URL:<https://www.pref.osaka.lg.jp/fuseiunei/toukeijouhou/toukeikajisshinochousa/maitsukisuikeijinkou/index.html>
 
 当該データ自体のライセンスに関する明記はありませんが、
-「[利用上の注意](https://www.pref.osaka.lg.jp/toukei/jinkou/jinkou-chuui.html)」のページがあるので目を通してください。
+「[利用上の注意](https://www.pref.osaka.lg.jp/o040090/toukei/jinkou/jinkou-chuui.html)」のページがあるので目を通してください。
 
 ## インストール
 
@@ -50,7 +50,7 @@ Rプロジェクトを作成し、その中にダウンロード用のディレ�
 
 大阪府の人口データを公表するページでは、毎月更新されているので、その配布ファイルのURLをスクレイピングします。主となるページのURLは以下です。
 
-<https://www.pref.osaka.lg.jp/toukei/jinkou/jinkou-xlslist.html>
+<https://www.pref.osaka.lg.jp/o040090/toukei/jinkou/jinkou-xlslist.html>
 
 ### URLを元にダウンロード
 
@@ -125,7 +125,7 @@ pop_osaka <- dalopop_read_file(datafiles)
 | …       | num  | …                                                               |
 | t_90_94 | num  | 90歳から94歳の総人口                                            |
 | t_95\_  | num  | 95歳以上の総人口                                                |
-| t_chile | num  | 年少総人口（０歳から１４歳）                                    |
+| t_child | num  | 年少総人口（０歳から１４歳）                                    |
 | t_young | num  | 生産総人口（１５歳から６４歳）                                  |
 | t_old   | num  | 老年総人口（６５歳以上）                                        |
 | m_total | num  | 男性総人口                                                      |
@@ -134,7 +134,7 @@ pop_osaka <- dalopop_read_file(datafiles)
 | …       | num  | …                                                               |
 | m_90_94 | num  | 90歳から94歳の男性人口                                          |
 | m_95\_  | num  | 95歳以上の男性人口                                              |
-| m_chile | num  | 年少男性人口（０歳から１４歳）                                  |
+| m_child | num  | 年少男性人口（０歳から１４歳）                                  |
 | m_young | num  | 生産男性人口（１５歳から６４歳）                                |
 | m_old   | num  | 老年男性人口（６５歳以上）                                      |
 | f_total | num  | 女性総人口                                                      |
@@ -143,7 +143,7 @@ pop_osaka <- dalopop_read_file(datafiles)
 | …       | num  | …                                                               |
 | f_90_94 | num  | 90歳から94歳の女性人口                                          |
 | f_95\_  | num  | 95歳以上の女性人口                                              |
-| f_chile | num  | 年少女性人口（０歳から１４歳）                                  |
+| f_child | num  | 年少女性人口（０歳から１４歳）                                  |
 | f_young | num  | 生産女性人口（１５歳から６４歳）                                |
 | f_old   | num  | 老年女性人口（６５歳以上）                                      |
 
@@ -186,3 +186,19 @@ dalopop_outputExcelData(dl_dir)
 # 地域ごとにシートを分けず、一つのエクセルファイルにする
 dalopop_outputExcelData(dl_dir, areasheet = FALSE)
 ```
+
+## もっと簡単に簡単なデータを
+
+人口データのうち、世帯数、総人口、３区分のみの簡単なデータを簡単に得ることもできます。
+
+``` r
+library(dalopop)
+
+# ダウンロードデータを保存するディレクトリを準備して
+# パスを変数に割当
+dl_dir <- "dl_file/"
+
+dalopop_outputSmallExcelData(dl_dir)
+```
+
+データをダウンロードするディレクトリを固定することで、既にダウンロードしたデータを再度ダンロードしなくなるので、処理が早くなります。

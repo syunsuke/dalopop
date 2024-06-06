@@ -3,5 +3,6 @@
 export("%>%")
 export(dalopop_get_data_urls)
 export(dalopop_outputExcelData)
+export(dalopop_outputSmallExcelData)
 export(dalopop_read_file)
 importFrom(magrittr,"%>%")
