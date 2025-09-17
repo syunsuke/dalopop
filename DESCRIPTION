@@ -1,21 +1,24 @@
 Package: dalopop
-Title: Collecting Population data in Osaka
-Version: 0.0.2.0000
+Title: Tools for Collecting Osaka Population Data
+Version: 0.0.3.0000
 Authors@R: 
     person("Syunsuke", "Fukuda", , "ok.xmonad@gmail.com", role = c("aut", "cre"))
-Description: A helper tool to collect population data in osaka.
+Description: Tools to Collect and Organize Osaka Population Data in SQLite.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Imports: 
     dalo,
+    DBI,
     dplyr,
     lubridate,
     magrittr,
     openxlsx,
     rabbit,
+    RSQLite,
     stringr
+SystemRequirements: sqlite3 command-line tool (https://www.sqlite.org/)
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

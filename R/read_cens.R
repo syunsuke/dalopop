@@ -1,13 +1,9 @@
 # format_cens 令和２年（２０２０年）１０月
 # 列名に準じる行?? 4列
-read_cens <- function(filepath){
+# 各国勢調査毎に用意する
+# データはどこから入手してもよいが、大阪府のページとして
 
-  # フォーマットの形式チェック
-  if(guess_dataformat(filepath) != "format_cens"){
-    message(sprintf("%s is not format_cens",filepath))
-    message("reading this file has skipped.")
-    return(NA)
-  }
+DB_read_census_2020 <- function(filepath){
 
   tmp_data <-
     openxlsx::read.xlsx(filepath,
@@ -19,8 +15,8 @@ read_cens <- function(filepath){
   # 2列目がNA（人口データのない)行を削除
   tmp_data <- tmp_data[!is.na(tmp_data[,2]),]
 
-  rn <- nrow(tmp_data)
   # 1列目（市区町村名）の文字列に含まれる空白を削除
+  # 見えないカタカナを消す処理
   tmp_data  <-
     tmp_data %>%
     dplyr::mutate(X1 = X1 %>%
@@ -47,32 +43,34 @@ read_cens <- function(filepath){
                     #stringr::str_replace_all("[（|）]", ""))
                     stringr::str_replace_all("[\uff08|\uff09]", ""))
 
-  tmp_data <- tmp_data[,c(1:4,7,11)]
 
-  # 列名の割り振り
-  colnames(tmp_data) <- cens_colname
+  # 採取する列
+  tmp_data <- tmp_data[,c(1:4,7:11)]
 
-  # 名前の並びの確認
-  check_area_order(tmp_data$area)
 
-  # 名前を付け替える
-  tmp_data[,1] <- cityID[,2]
+  ## 列名の定義
+  census_colname <- c(
+    "area_name",# area name
+    "total_population",   # population total
+    "male_population",    # population male
+    "female_population",  # population female
+
+    "total_households",  # total households count(施設、病院含む)
+    "households",  # households count
+    "households_member",  # households member
+    "household_size",  # person per household 1世帯当たり人口
+    "population_density"   # person per area size(km^2)  人口密度
+  )
+
+  colnames(tmp_data) <- census_colname
+
+  # 名前の並びの確認と置き換え
+  check_area_v002_DB(tmp_data[,1])
+  tmp_data[,1] <- area_name_v002_DB
 
   ans <- tmp_data %>%
-    dplyr::mutate(pph = pt / hh,
-                  date = lubridate::as_date("2020/10/1"))
-
+    dplyr::mutate(observation_date = lubridate::as_date("2020/10/1"))
 
   return(ans)
 }
 
-cens_colname <- c(
-  "area",# area name
-  "pt",  # population total
-  "pm",  # polulation male
-  "pf",  # polulation female
-
-  "hh",  # households
-
-  "ppa"   # person per area size(km^2)  人口密度
-)

@@ -1,14 +1,15 @@
-# format_pop02
+# 人口修正済値（前回国勢調査以前）
+#
+# DB_syusei
 # 平成２７年（２０１５年）１１月から令和２年（２０２０年）９月まで
 # 列名に準じる行??11列
-read_pop02 <- function(filepath){
 
-  # フォーマットの形式チェック
-  if(guess_dataformat(filepath) != "format_pop02"){
-    message(sprintf("%s is not format_pop02",filepath))
-    message("reading this file has skipped.")
-    return(NA)
-  }
+
+
+###########################################
+# DB用
+###########################################
+DB_read_syusei <- function(filepath){
 
   # シートを把握
   sheet_names <- openxlsx::getSheetNames(file = filepath)
@@ -18,19 +19,31 @@ read_pop02 <- function(filepath){
   for(i in seq_along(sheet_names)){
 
     # 左右別々の処理
-    l_data <- sub_left(filepath, sheet_names[i])
-    r_data <- sub_right(filepath, sheet_names[i])
+    l_data <- DB_syusei_sub_left(filepath, sheet_names[i])
+    r_data <- DB_syusei_sub_right(filepath, sheet_names[i])
 
-    # 統合して地域名の並びをチェック
+    # 列名
+    syusei_colname <- c(
+      "area_name",# area name
+      "total_households",  # households
+      "total_population",   # population total
+      "male_population",    # population male
+      "female_population"  # population female
+    )
+    colnames(l_data) <- syusei_colname
+    colnames(r_data) <- syusei_colname
+
+    # 統合
     tmp <- dplyr::bind_rows(l_data,r_data)
-    check_area_order(tmp$area)
+
+    # 地域名の並びをチェック
+    # 地域名を一意の名前に変更
+    check_area_v002_DB(tmp[,1])
+    tmp[,1] <- area_name_v002_DB
 
     # 日付列の追加
     tmp <- tmp %>%
-      dplyr::mutate(date = rabbit::fetch_date_from_string(sheet_names[i]))
-
-    # 地域名を一意の名前に変更
-    tmp$area <- cityID[,2]
+      dplyr::mutate(observation_date = rabbit::fetch_date_from_string(sheet_names[i]))
 
     ans <- dplyr::bind_rows(ans, tmp)
   }
@@ -39,7 +52,8 @@ read_pop02 <- function(filepath){
 
 }
 
-sub_left <- function(filepath, sheet){
+
+DB_syusei_sub_left <- function(filepath, sheet){
 
   # 読み込み
   df <-
@@ -60,12 +74,10 @@ sub_left <- function(filepath, sheet){
              stringr::str_replace_all("NA", ""))
   ans <- ans[,c(1,3:6)]
 
-  # 列名の割り振り
-  colnames(ans) <- pop02_colname
   return(ans)
 }
 
-sub_right <- function(filepath, sheet){
+DB_syusei_sub_right <- function(filepath, sheet){
 
   # 読み込み
   df <-
@@ -84,17 +96,7 @@ sub_right <- function(filepath, sheet){
     dplyr::mutate(X1 = X1 %>%
              stringr::str_replace_all("\\s", "") %>%
              stringr::str_replace_all("NA", ""))
-  colnames(ans) <- pop02_colname
   return(ans)
 }
-
-
-pop02_colname <- c(
-  "area",# area name
-  "hh",  # households
-  "pt",  # population total
-  "pm",  # polulation male
-  "pf"  # polulation female
-)
 
 
