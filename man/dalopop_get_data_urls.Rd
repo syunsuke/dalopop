@@ -2,13 +2,15 @@
 % Please edit documentation in R/urls_maker.R
 \name{dalopop_get_data_urls}
 \alias{dalopop_get_data_urls}
-\title{Get population excel files urls}
+\title{Get Osaka Population Excel File URLs}
 \usage{
 dalopop_get_data_urls()
 }
 \value{
-vector of file ulrs
+A character vector. Each element is a URL pointing to an official Excel file
+providing population data for Osaka Prefecture and its municipalities.
 }
 \description{
-Get population excel files urls
+This function returns the URLs of the official Excel files published by Osaka Prefecture,
+which contain population statistics for Osaka Prefecture and its municipalities.
 }

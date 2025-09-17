@@ -1,81 +1,89 @@
-# format_pop02
-# 平成２７年（２０１５年）１１月から令和２年（２０２０年）９月まで
-# 列名に準じる行??11列
+############################################################
+# 人口推計値（前回国勢調査後、次回国勢調査未到来）
 #
-# format_cens 令和２年（２０２０年）１０月
-# 列名に準じる行?? 4列
-#
-# format_pop03
+# DB_suikei_v001
 # 令和２年（２０２０年）１１月から令和３年（２０２１年）９月まで
 # [1,2]に日付を含んだ文字列
 # シートは１枚
 # 列名に準じる行4行め 14列
 #
-# format_pop04
+# DB_suikei_v002
 # 令和３年（２０２１年）１０月以降
 # [1,2]に日付を含んだ文字列
 # シートは１枚
 # 列名に準じる行4行め 17列
 #
-# format_5sai
+#
+############################################################
+# 人口修正済値（前回国勢調査以前）
+#
+# DB_syusei_v001
+# 平成２７年（２０１５年）１１月から令和２年（２０２０年）９月まで
+# 列名に準じる行??11列
+#
+#
+############################################################
+# 国勢調査時点データ（国勢調査結果データ）
+#
+# DB_census_2020
+# 令和２年（２０２０年）１０月
+# 列名に準じる行?? 4列
+#
+############################################################
+# 年齢区分データ
+#
+# 元データは割合、修正か推定の総数に割合を掛けて値にしている
+#
+# 今のところ以下の２だが、内容は要検証
+# DB_5sai_v001 95歳まで
 # 列名に準じる行?? 22列
+# DB_5sai_v002 85歳まで
+# 列名に準じる行?? 20列
 
-guess_dataformat <- function(filepath){
+guess_DB_format <- function(filepath){
   a <- openxlsx::read.xlsx(filepath, colNames = FALSE)
 
-  # format_5sai
-  # 年齢別人口
+  ###################################
+  # 5歳区分年齢別人口
+  ###################################
+  # 95歳まで
   if(ncol(a) == 22){
-    return("format_5sai")
+    return("DB_5sai_v002")
   }
 
-  # format_pop04
-  # 令和３年（２０２１年）１１月以降
+  # 85歳まで
+  if(ncol(a) == 20){
+    return("DB_5sai_v001")
+  }
+
+  ###################################
+  # 推計値
+  ###################################
+  # 対年増減含む
   if(ncol(a) == 17){
-    return("format_pop04")
+    return("DB_suikei_v002")
   }
 
-  # format_pop03
-  #令和２年（２０２０年）１１月から令和３年（２０２１年）９月まで
+  # 対年増減含まない
   if(ncol(a) == 12){
-    return("format_pop03")
+    return("DB_suikei_v001")
   }
 
-  # format_cens 令和２年（２０２０年）１０月
+  ###################################
+  # DB_census_2020 令和２年（２０２０年）１０月
+  ###################################
   if(ncol(a) == 4){
-    return("format_cens")
+    return("DB_census_2020")
   }
 
-  # format_h27
-  # 平成２７年（２０１５年）１１月から令和２年（２０２０年）９月まで
+  ###################################
+  # 修正値
+  ###################################
   if(ncol(a) == 11){
-    return("format_pop02")
+    return("DB_syusei")
   }
 
   return("format_unknown")
 
 }
-
-check_area_order <- function(target_names){
-
-  flag <- TRUE
-  if (length(target_names) != length(area_name_format)){
-    message(sprintf("input:%d format:%d",length(target_names),length(area_name_format)))
-    stop("Area length  does not match with format.")
-
-  }else{
-    flag <- all(target_names == area_name_format)
-  }
-
-  if(!flag){
-    for(i in seq_along(target_names)){
-      if (target_names[i] != area_name_format[i]){
-        message(sprintf("%10s,%10s",target_names[i],area_name_format[i]))
-      }
-    }
-    stop("Area format is something wrong.")
-  }
-}
-
-
 
