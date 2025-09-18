@@ -14,3 +14,9 @@ providing population data for Osaka Prefecture and its municipalities.
 This function returns the URLs of the official Excel files published by Osaka Prefecture,
 which contain population statistics for Osaka Prefecture and its municipalities.
 }
+\examples{
+\dontrun{
+urls <- dalopop_get_data_urls()
+urls
+}
+}
