@@ -31,8 +31,9 @@
 #' providing population data for Osaka Prefecture and its municipalities.
 #'
 #' @export
-#' \dontrun{
+#'
 #' @examples
+#' \dontrun{
 #' urls <- dalopop_get_data_urls()
 #' urls
 #' }

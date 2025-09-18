@@ -3,6 +3,9 @@
 # sqlite3 command is needed
 ##############################################
 exec_sqlfile_by_SQLiteCLI <- function(db,sqlfile){
-  system(sprintf("sqlite3 %s < %s", shQuote(db), shQuote(sqlfile)))
+  #system(sprintf("sqlite3 %s < %s", shQuote(db), shQuote(sqlfile)))
+  system2("sqlite3",
+          args = c(db),
+          input = readLines(sqlfile))
 }
 
