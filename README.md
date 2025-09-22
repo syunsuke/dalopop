@@ -11,13 +11,7 @@ dalopopは、大阪府の人口データを集めて活用するためのツー�
 大阪府のホームページで公表されている月次の人口データをダウンロードして、
 SQLiteのデータベースファイルにするための関数を用意しています。また、データベースからデータをエクセルファイルでエクスポートしたり、レポートのエクスポートも出来ます。
 
-<figure>
-<img
-src="%22https://github.com/user-attachments/assets/1c35d243-45d8-4d1d-a583-9466cc9b56c7%22"
-alt="データベースでの作業とレポート" />
-<figcaption
-aria-hidden="true">データベースでの作業とレポート</figcaption>
-</figure>
+![](https://github.com/user-attachments/assets/1c35d243-45d8-4d1d-a583-9466cc9b56c7)
 
 このツールで利用するデータは、 大阪府が公表している
 「[大阪府の毎月推計人口](https://www.pref.osaka.lg.jp/fuseiunei/toukeijouhou/toukeikajisshinochousa/maitsukisuikeijinkou/index.html)」に基づくものです。

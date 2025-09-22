@@ -25,7 +25,7 @@ dalopopは、大阪府の人口データを集めて活用するためのツー�
 SQLiteのデータベースファイルにするための関数を用意しています。また、データベースからデータをエクセルファイルでエクスポートしたり、レポートのエクスポートも出来ます。
 
 
-![データベースでの作業とレポート]("https://github.com/user-attachments/assets/1c35d243-45d8-4d1d-a583-9466cc9b56c7")
+![](https://github.com/user-attachments/assets/1c35d243-45d8-4d1d-a583-9466cc9b56c7)
 
 
 このツールで利用するデータは、 大阪府が公表している
