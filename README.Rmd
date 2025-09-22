@@ -1,23 +1,32 @@
+---
+output: github_document
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+
+```
 
 # dalopop
 
 <!-- badges: start -->
-
 <!-- badges: end -->
+
 
 dalopopは、大阪府の人口データを集めて活用するためのツールです。
 大阪府のホームページで公表されている月次の人口データをダウンロードして、
 SQLiteのデータベースファイルにするための関数を用意しています。また、データベースからデータをエクセルファイルでエクスポートしたり、レポートのエクスポートも出来ます。
 
-<figure>
-<img
-src="%22https://github.com/user-attachments/assets/1c35d243-45d8-4d1d-a583-9466cc9b56c7%22"
-alt="データベースでの作業とレポート" />
-<figcaption
-aria-hidden="true">データベースでの作業とレポート</figcaption>
-</figure>
+
+![データベースでの作業とレポート]("https://github.com/user-attachments/assets/1c35d243-45d8-4d1d-a583-9466cc9b56c7")
+
 
 このツールで利用するデータは、 大阪府が公表している
 「[大阪府の毎月推計人口](https://www.pref.osaka.lg.jp/fuseiunei/toukeijouhou/toukeikajisshinochousa/maitsukisuikeijinkou/index.html)」に基づくものです。
@@ -27,7 +36,9 @@ URL:<https://www.pref.osaka.lg.jp/fuseiunei/toukeijouhou/toukeikajisshinochousa/
 当該データ自体のライセンスに関する明記はありませんが、
 「[利用上の注意](https://www.pref.osaka.lg.jp/o040090/toukei/jinkou/jinkou-chuui.html)」のページがあるので目を通してください。
 
+
 ## インストール
+
 
 まず、dalopopを利用するには、R以外に以下の準備が必要になります。
 
@@ -35,16 +46,17 @@ URL:<https://www.pref.osaka.lg.jp/fuseiunei/toukeijouhou/toukeikajisshinochousa/
 
 dalopopは、データベースSQLiteと連携して動くので、システムにSQLiteが必要です。
 
-<https://www.sqlite.org/>
+[https://www.sqlite.org/](https://www.sqlite.org/)
+
 
 ### JDK
 
 更に、内部で利用する`XLConnect`パッケージは、JAVAの開発環境上で動くので、システムにJDK(JavaDeveplopmentKit)が必要になります。
 
-JDKはどこのものでも構いません。うちでは、Eclipse
-TemurinのOpenJDKを利用(バージョンはJDK8)しています。
+JDKはどこのものでも構いません。うちでは、Eclipse TemurinのOpenJDKを利用(バージョンはJDK8)しています。
 
-<https://adoptium.net/temurin>
+[https://adoptium.net/temurin](https://adoptium.net/temurin)
+
 
 ### Rの必要パッケージ
 
@@ -53,14 +65,16 @@ dalopopは、githubからインストールできます。
 `dalo`パッケージに依存しているので、以下のようにインストールします。
 その他で必要になるパッケージは自動的にインストールされるはずです。
 
-``` r
+```{r, eval=FALSE}
 # install.packages("devtools")
 devtools::install_github("syunsuke/rabbit")
 devtools::install_github("syunsuke/dalo")
 devtools::install_github("syunsuke/dalopop")
 ```
 
+
 ## 使い方
+
 
 ### Rプロジェクト作成
 
@@ -74,7 +88,8 @@ devtools::install_github("syunsuke/dalopop")
 
 `dalopop_init_sqlite`コマンドで、データベースを作成して初期化。
 
-``` r
+
+```{r, eval=FALSE}
 # データベースのファイル名を決める
 dbname <- "osaka_population.sqlite"
 
@@ -86,7 +101,8 @@ dalopop_init_sqlite(dbname)
 
 `dalopop_update_sqlite`コマンドで、データベースを最新状態にアップデート
 
-``` r
+
+```{r, eval=FALSE}
 # キャッシュ用ディレクトリを確保
 d <- "data"
 
@@ -105,12 +121,15 @@ sqliteデータベースファイル名を引数に与えるだけです。
 
 大阪府は毎月データを公開しているので、公開されたらアップデートしましょう。
 
+
+
 ### エクスポート
 
-`dalopop_export_excel`コマンドで、 比較的扱いやすいデータの形にして、
+`dalopop_export_excel`コマンドで、
+比較的扱いやすいデータの形にして、
 エクセルファイルとして出力できます。
 
-``` r
+```{r,eval=FALSE} 
 dalopop_export_excel(dbname)
 ```
 
@@ -118,7 +137,8 @@ dalopop_export_excel(dbname)
 
 しかし、地域を選択することも出来ます。
 
-``` r
+
+```{r,eval=FALSE} 
 # フィルタリングしたい市区町村名
 myarea <- c("枚方市","寝屋川市","交野市","四條畷市","大東市")
 
@@ -129,15 +149,16 @@ dalopop_export_excel(dbname, areas = myarea)
 5歳区分別人口の区分をデフォルトの85歳から、95歳に変更できます。
 （但し、比較的新しい時点のもののみ）
 
-``` r
+```{r,eval=FALSE} 
 dalopop_export_excel(dbname = dbname, 
                      age85 = FALSE, 
                      areas = myarea)
 ```
 
+
 エクスポートするファイル名は、`output`オプションで指定できます。
 
-``` r
+```{r,eval=FALSE} 
 dalopop_export_excel(dbname = dbname, 
                      age85 = FALSE, 
                      areas = myarea,
@@ -145,13 +166,17 @@ dalopop_export_excel(dbname = dbname,
                      )
 ```
 
+
 ## レポート
 
 SQLiteのデータベースの地域名を与えることで、その地域の人口レポートを出力させることが出来ます。
 複数地域名をベクトルで与えると、複数のレポートファイルを出力することが出来ます。
 
-``` r
+```{r,eval=FALSE} 
 dalopop_report_by_excel(cities = c("枚方市","寝屋川市"),
                         db = dbname,
                         dir = "output/")
 ```
+
+
+

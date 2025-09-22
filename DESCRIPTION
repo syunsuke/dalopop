@@ -1,6 +1,6 @@
 Package: dalopop
 Title: Tools for Collecting Osaka Population Data
-Version: 0.0.5.0000
+Version: 0.0.6.0000
 Authors@R: 
     person("Syunsuke", "Fukuda", , "ok.xmonad@gmail.com", role = c("aut", "cre"))
 Description: Tools to Collect and Organize Osaka Population Data in SQLite.
@@ -17,7 +17,8 @@ Imports:
     openxlsx,
     rabbit,
     RSQLite,
-    stringr
+    stringr,
+    XLConnect
 SystemRequirements: sqlite3 command-line tool (https://www.sqlite.org/)
 Suggests: 
     testthat (>= 3.0.0)
