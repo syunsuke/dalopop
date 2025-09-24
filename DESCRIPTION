@@ -1,6 +1,6 @@
 Package: dalopop
-Title: Tools for Collecting Osaka Population Data
-Version: 0.0.6.0000
+Title: Tools for Managing Osaka Population Data
+Version: 0.0.7.0000
 Authors@R: 
     person("Syunsuke", "Fukuda", , "ok.xmonad@gmail.com", role = c("aut", "cre"))
 Description: Tools to Collect and Organize Osaka Population Data in SQLite.
